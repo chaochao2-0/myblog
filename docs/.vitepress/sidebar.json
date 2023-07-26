@@ -5,10 +5,6 @@
                 "text": "2023",
                 "items": [
                     {
-                        "text": "缘起",
-                        "link": "/2023/缘起"
-                    },
-                    {
                         "text": "vitePress",
                         "items": [
                             {
