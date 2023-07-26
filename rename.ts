@@ -84,19 +84,25 @@ const getConfData: obj = {
     }
 }
 
+const dealData = (data: any) => {
+    data?.forEach((each: any) => {
+        if (each.items) {
+            dealData(each.items)
+        } else {
+            const pathArr = each.link?.split('/')
+            pathArr[pathArr.length - 1] = pinyin(pathArr[pathArr.length - 1], { toneType: 'num' }).replace(/\s*/g, '')
+            each.link = pathArr.join('/')
+        }
+    })
+}
+
 const editorConfig = (filePath: string, type: string) => {
     const conf = fs.readFileSync(filePath, 'UTF-8')
 
     const editConf = conf
     let editConfData = JSON.parse(editConf)
     const confData = getConfData[type](editConfData)
-    confData.forEach((item: any) => {
-        item.items?.forEach((each: any) => {
-            const pathArr = each.link.split('/')
-            pathArr[pathArr.length - 1] = pinyin(pathArr[pathArr.length - 1], { toneType: 'num' }).replace(/\s*/g, '')
-            each.link = pathArr.join('/')
-        })
-    })
+    dealData(confData)
 
     const newConf = JSON.stringify(editConfData, null, 4)
     fs.writeFile(filePath, newConf, (error: any) => {
