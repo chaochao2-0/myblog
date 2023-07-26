@@ -1,25 +1,3 @@
 {
-    "nav": [
-        {
-            "text": "Guide",
-            "link": "https://gitee.com/chaochao2_0/projects"
-        },
-        {
-            "text": "Dropdown Menu",
-            "items": [
-                {
-                    "text": "Item A",
-                    "link": "/2021/测试"
-                },
-                {
-                    "text": "Item B",
-                    "link": "https://gitee.com/chaochao2_0/projects"
-                },
-                {
-                    "text": "Item C",
-                    "link": "/2022/回流和重绘"
-                }
-            ]
-        }
-    ]
+    "nav": []
 }

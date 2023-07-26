@@ -4,7 +4,7 @@ import navJson from './nav.json'
 export default {
     title: '轻踏云层', // 博客的标题
     description: '轻踏云层 的个人博客', // 博客的介绍
-    base: '/myblog', // 如果想用 https://mlyz.wdy.github.io/blog/ 访问，那么这句话必填
+    base: '/myblog', // 这里要填github的仓库名，不然它找不到对应的css、js资源
     themeConfig: {
         logo: '/images/avatar.jpg',
         nav: navJson.nav,

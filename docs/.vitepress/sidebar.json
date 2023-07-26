@@ -5,38 +5,17 @@
                 "text": "2023",
                 "items": [
                     {
-                        "text": "回流和重绘",
-                        "link": "/2023/wakk"
+                        "text": "缘起",
+                        "link": "/2023/缘起"
                     },
                     {
-                        "text": "测试",
-                        "link": "/2023/测试"
-                    }
-                ]
-            },
-            {
-                "text": "2022",
-                "items": [
-                    {
-                        "text": "回流和重绘",
-                        "link": "/2022/回流和重绘"
-                    },
-                    {
-                        "text": "测试",
-                        "link": "/2022/测试"
-                    }
-                ]
-            },
-            {
-                "text": "2021",
-                "items": [
-                    {
-                        "text": "回流和重绘",
-                        "link": "/2021/回流和重绘"
-                    },
-                    {
-                        "text": "测试",
-                        "link": "/2021/测试"
+                        "text": "vitePress",
+                        "items": [
+                            {
+                                "text": "element-plus自定义主题",
+                                "link": "/2023/vitePress/学习element-plus的vitePress配置"
+                            }
+                        ]
                     }
                 ]
             }
