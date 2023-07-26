@@ -5,6 +5,10 @@
                 "text": "2023",
                 "items": [
                     {
+                        "text": "Monorepo学习",
+                        "link": "/2023/Monorepo学习"
+                    },
+                    {
                         "text": "vitePress",
                         "items": [
                             {

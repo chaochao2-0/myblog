@@ -1,6 +1,13 @@
 # 学习element-plus的vitePress配置
 
-本来想单独把 `element-plus` 的项目拎出来，这样更方便学习。但是因为 `element-plus` 项目是用 `Monorepo` 来搭建的，它的文档项目中引用了自己项目内部的一些依赖，所有不能直接把项目的文档部分单独拿出来运行
+<script setup>
+import { data } from '../../../pinyin.data.ts'
+const fileName = 'Monorepo学习'
+const name = data.data[fileName] ? data.data[fileName] : fileName
+</script>
+本来想单独把 `element-plus` 的项目拎出来，这样更方便学习。但是因为 `element-plus` 项目是用 
+<a :href="'../' + name">Monorepo</a>
+ 来搭建的，它的文档项目中引用了自己项目内部的一些依赖，所有不能直接把项目的文档部分单独拿出来运行
 
 ```json
 "@element-plus/build": "workspace:*",
