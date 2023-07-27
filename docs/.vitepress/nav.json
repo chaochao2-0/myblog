@@ -1,3 +1,21 @@
 {
-    "nav": []
+    "nav": [
+        {
+            "text": "gitee",
+            "link": "https://gitee.com/chaochao2_0/projects"
+        },
+        {
+            "text": "Dropdown Menu",
+            "items": [
+                {
+                    "text": "CSDN",
+                    "link": "https://blog.csdn.net/chaochao2_0?spm=1011.2415.3001.5343"
+                },
+                {
+                    "text": "gitee",
+                    "link": "https://gitee.com/chaochao2_0/projects"
+                }
+            ]
+        }
+    ]
 }

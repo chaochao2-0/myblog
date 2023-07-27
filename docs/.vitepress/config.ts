@@ -16,5 +16,11 @@ export default defineConfig({
         },
         socialLinks: [{ icon: 'github', link: 'https://github.com/chaochao2-0' }] // 可以连接到 github
     },
-    lastUpdated: true
+    lastUpdated: true,
+    vite: {
+        server: {
+            host: true,
+            port: 1104
+        }
+    }
 })
