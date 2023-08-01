@@ -100,5 +100,6 @@ const initFunction = async() => {
 initFunction()
 ```
 
+## 一些思考
 `composition api`的写法没有了`getters`和`actions`的模块要求，写法更自由，也因为没有模块化要求，代码解构显得不是那么清晰。利弊就和`vue3`使用`compositon api`和`options api`的利弊一样，各有所好。
 虽然是各有利弊，但是`composition api`本来就是为解决大项目中逻辑处理太过分散的问题，这一点是`options api`无法解决和避免的。我当然选择全力拥抱`composition api`。

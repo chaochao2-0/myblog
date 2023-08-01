@@ -6,11 +6,19 @@
                 "items": [
                     {
                         "text": "pinia",
-                        "link": "/2023/pinia中的options api和compositon api对比.md"
+                        "link": "/2023/pinia中的options api和compositon api对比"
+                    },
+                    {
+                        "text": "脚手架开发",
+                        "link": "/2023/脚手架开发"
+                    },
+                    {
+                        "text": "npx",
+                        "link": "/2023/npx"
                     },
                     {
                         "text": "npm run dev后发生了什么",
-                        "link": "/2023/npm run dev后发生了什么.md"
+                        "link": "/2023/npm run dev后发生了什么"
                     },
                     {
                         "text": "Monorepo学习",
