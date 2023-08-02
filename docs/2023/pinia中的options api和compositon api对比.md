@@ -24,7 +24,6 @@ export const useInformationStore = defineStore('information', {
     actions: {
         async getData() {
             const params = {
-                appliId: 'BIM2023053121223048',
                 pageNo: 1,
                 pageSize: 10
             }
@@ -71,7 +70,6 @@ export const useInformationStore = defineStore('counter', () => {
     // 直接在函数中进行接口请求
     const getData = async () => {
         const params = {
-            appliId: 'BIM2023053121223048',
             pageNo: 1,
             pageSize: 10
         }
