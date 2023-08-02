@@ -73,27 +73,10 @@ const fileResetName = (folderPath: string) => {
     })
 }
 
-const sidebarConfPath = pathJoin('./docs/.vitepress/sidebar.json')
-const navConfPath = pathJoin('./docs/.vitepress/nav.json')
 const getConfData: obj = {
-    nav: (data: any) => {
-        return data.nav
-    },
     sidebar: (data: any) => {
         return data.sidebar['/']
     }
-}
-
-const dealData = (data: any) => {
-    data?.forEach((each: any) => {
-        if (each.items) {
-            dealData(each.items)
-        } else {
-            const pathArr = each.link?.split('/')
-            pathArr[pathArr.length - 1] = pinyin(pathArr[pathArr.length - 1], { toneType: 'num' }).replace(/\s*/g, '')
-            each.link = pathArr.join('/')
-        }
-    })
 }
 
 const editorConfig = (filePath: string, type: string) => {
@@ -109,6 +92,18 @@ const editorConfig = (filePath: string, type: string) => {
         if (error) throw `文件写入出错: ${error}`
     })
     return conf
+}
+
+const dealData = (data: any) => {
+    data?.forEach((each: any) => {
+        if (each.items) {
+            dealData(each.items)
+        } else {
+            const pathArr = each.link?.split('/')
+            pathArr[pathArr.length - 1] = pinyin(pathArr[pathArr.length - 1], { toneType: 'num' }).replace(/\s*/g, '')
+            each.link = pathArr.join('/')
+        }
+    })
 }
 
 const resetConfig = (filePath: string, conf: string) => {
@@ -134,9 +129,12 @@ const resertToPinyin = () => {
 }
 
 fileRename(basicPath)
+const sidebarConfPath = pathJoin('./docs/.vitepress/sidebar.json')
 const sidebarconf = editorConfig(sidebarConfPath, 'sidebar')
-const navconf = editorConfig(navConfPath, 'nav')
+
 writeChineseToPinyin()
+
+
 exec('npm run build', (error: any, stdout: any, stderr: any) => {
     if (error) {
         console.error(`执行出错: ${error}`)
@@ -144,7 +142,6 @@ exec('npm run build', (error: any, stdout: any, stderr: any) => {
     }
     fileResetName(basicPath)
     resetConfig(sidebarConfPath, sidebarconf)
-    resetConfig(navConfPath, navconf)
     resertToPinyin()
     // console.log(`stdout: ${stdout}`)
     // console.log(`stderr: ${stderr}`)
