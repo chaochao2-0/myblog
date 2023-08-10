@@ -4,3 +4,5 @@
 ### 中文命名md文件
 `vitePress`如果用中文进行md的文件命名，本地不会有什么影响，但是打包发布到线上就会找不到对应的文档。这里用[pinyin-pro](https://www.npmjs.com/package/pinyin-pro)做了一个打包优化，思路是：打包前，我会先用`node`将文档里的所有文件名替换成对应的拼音名，然后再打包，打包结束以后，再将文件名进行还原。这样我就可以用中文来命令md文件，方便我自己的维护。
 
+`three`中的`mini-city`案例: [https://github.com/luosijie/threejs-examples](https://github.com/luosijie/threejs-examples)
+
