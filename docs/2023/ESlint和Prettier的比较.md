@@ -24,3 +24,12 @@
  这样就可以了。配合IDE扩展，还可以在保存时触发自动修复。它的工作方式与Prettier类似，但当你要换行的时候尊重你的选择，并提供了许多lint的最佳实践。哦！当然，这是基于我自己的需求的另一种"固执己见的"配置，但或许它可以成为一份很好的参考，方便你创建属于你自己的配置。
 
  以上Prettier和ESlint的观点来自：https://antfu.me/posts/why-not-prettier-zh，我一直在使用Prettier，ESlint用的其实很少，也对ESlint不够了解，但我确实在工作中感受到了Prettier的一些局限性，也就是文中所说的Prettier的"固执己见"。有时间可以参考一下他的实现来配置自己的ESlint最佳实践。
+
+eslint在vscode的setting中配置保存时自动格式化
+ ```json
+  "eslint.format.enable": true,
+  "eslint.run": "onSave",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  }
+ ```
