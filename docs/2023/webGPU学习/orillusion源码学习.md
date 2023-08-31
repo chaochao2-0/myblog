@@ -189,3 +189,32 @@ class bb extends aa {
 aa.wakk() // 第5行被执行 10
 bb.kk() // 22
 ```
+
+根据事件的优先级进行排序
+```ts
+// 根据事件的优先级进行排序
+this.listeners[type].sort(function (listener1: CEventListener, listenerCEventListener) {
+    return listener2.priority - listener1.priority;
+});
+```
+
+Map数据的迭代方法
+```ts
+for (const iterator of ComponentCollect.componentsComputeList) {
+    let k = iterator[0];
+    let v = iterator[1];
+    for (const iterator2 of v) {
+        let f = iterator2[0];
+        let c = iterator2[1];
+        if (f.enable) {
+            c(k, command);
+        };
+    }
+}
+```
+
+
+```ts
+// implements: ComponentBase类实现自IComponent接口，需要重写实现接口中的所有属性和方法
+export class ComponentBase implements IComponent
+```
