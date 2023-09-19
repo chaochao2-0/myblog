@@ -100,6 +100,9 @@ console.log(position)
 ### 事件执行顺序优化
 pointermove 事件会比 mousemove 事件先执行
 首先，事件是可以注册多个的，你在这个地方注册一个 mousedown ，另一个地方再注册一个 mousedown 事件，两个事件的函数都会执行
+```ts
+// TODO:如果一个项目中同时存在各种事件同时需要触发执行，有有没有一个事件处理机制来统一规范的对触发事件进行控制？这个后续需要进一步学习
+```
 
 
 
@@ -135,3 +138,78 @@ collectPositionBylayer[item.layer] = {
     pickColors: [...ItemPickColors]
 }
 ```
+
+### 用贝塞尔曲线来优化cad的手绘线批注
+贝塞尔曲线根据控制点的数量分为：
+- 一阶贝塞尔曲线（2个控制点）
+- 二阶贝塞尔曲线（3个控制点）
+- 三阶贝塞尔曲线（4个控制点）
+- n阶贝塞尔曲线（n+1个控制点）
+
+通过控制点是怎么绘制出贝塞尔曲线的呢？
+这里以三阶贝塞尔曲线为例：四个控制点通过先后顺序进行连接，形成三条线段，通过一个参数t，其中 t ∈ [0, 1]，该参数的值等于线段上某一个点距离起点的长度除以线段长度。
+接下来对每一条线段做同样的操作，得到三个控制点；
+然后对三个控制点重复操作，得到两个控制点；
+最后再用同样的方法可以得到最终的一个点，这个点就是贝塞尔曲线上的一个点。
+通过控制t的值，由0增加至1，就绘制出了一条由起点至终点的贝塞尔曲线。
+
+css动画中使用的贝塞尔曲线其实是三次贝塞尔曲线
+
+three中有现成的贝塞尔曲线的方法封装: CubicBezierCurve3，除了贝塞尔曲线，three中还有 CatmullRomCurve3 可以用来绘制平滑曲线，它的实现原理是：Catmull-Rom算法
+
+`cubic-bezier()`函数定义了一个三次贝塞尔曲线。三次贝塞尔曲线通过四个点：P0、P1、P2、P3来定义。P0和P3是曲线的起点和终点，在css中起点和终点都是固定的，P0是(0, 0)，表示起始时间或位置以及初始状态，P3是(1, 1)表示最终时间或位置以及最终状态。
+```ts
+// x1和y1定义了P1点的横纵坐标，x2和y2定义了P2点的横纵坐标。其中x1和x2的范围必须在[0, 1]区间内，否则这个曲线就是无效的
+// css中如果声明了无效的三次贝塞尔曲线，那么整个属性的声明都会被无视
+cubic-bezier(x1, y1, x2, y2)
+```
+
+使用three中的`CubicBezierCurve3`实现css中的动画效果的贝塞尔曲线绘制：
+```ts
+// const curve = new THREE.CubicBezierCurve3(
+//     new THREE.Vector3(0, 0, 0),
+//     new THREE.Vector3(7.5, 75, 0),
+//     new THREE.Vector3(87.5, 36, 0),
+//     new THREE.Vector3(100, 100, 0)
+// )
+
+// css中的ease的贝塞尔曲线：cubic-bezier(0.25, 0.1, 0.25, 1.0)
+// const curve = new THREE.CubicBezierCurve3(
+//     new THREE.Vector3(0, 0, 0),
+//     new THREE.Vector3(25, 10, 0),
+//     new THREE.Vector3(25, 100, 0),
+//     new THREE.Vector3(100, 100, 0)
+// )
+
+// css中的ease-in的贝塞尔曲线：cubic-bezier(0.42, 0.0, 1.0, 1.0)
+// const curve = new THREE.CubicBezierCurve3(
+//     new THREE.Vector3(0, 0, 0),
+//     new THREE.Vector3(42, 0, 0),
+//     new THREE.Vector3(100, 100, 0),
+//     new THREE.Vector3(100, 100, 0)
+// )
+
+// css中的ease-out的贝塞尔曲线：cubic-bezier(0.0, 0.0, 0.58, 1.0)
+// const curve = new THREE.CubicBezierCurve3(
+//     new THREE.Vector3(0, 0, 0),
+//     new THREE.Vector3(0, 0, 0),
+//     new THREE.Vector3(58, 100, 0),
+//     new THREE.Vector3(100, 100, 0)
+// )
+
+// css中的ease-in-out的贝塞尔曲线：cubic-bezier(0.42, 0.0, 0.58, 1.0)
+const curve = new THREE.CubicBezierCurve3(
+    new THREE.Vector3(0, 0, 0),
+    new THREE.Vector3(42, 0, 0),
+    new THREE.Vector3(58, 100, 0),
+    new THREE.Vector3(100, 100, 0)
+)
+
+const points = curve.getPoints(50)
+const geometry = new THREE.BufferGeometry().setFromPoints(points)
+const material = new THREE.LineBasicMaterial({ color: 0xff0000 })
+const curveObject = new THREE.Line(geometry, material)
+scene.add(curveObject)
+```
+
+在两点之间找两个控制点，用贝塞尔曲线再次将随机点连起来，这样就能得到一条平滑的曲线。比如P0和P3的需要连接的起始点和终点，P1和P2是需要添加的控制点。那么P1需要添加在P0右侧，并且与P0的y相同；P2需要添加在P3左侧，与P3的y相同。这样就能在P0和P3之间得到一条平滑的曲线
