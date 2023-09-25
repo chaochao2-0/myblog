@@ -553,3 +553,77 @@ assert(age >= 0, "A person's age cannot be less than zero")
 // 先决条件
 precondition(index > 0, "Index must be greater than zero.")
 ```
+
+## 字符和字符串
+字符串字面量
+```swift
+// 字符串字面量
+let someString = "Some string literal value"
+
+// 多行字符串，多行字符串中，如果你想换行，以便加强代码的可读性，但是你又不想在你的多行字符串字面量中出现换行符的话，你可以用在行尾写一个反斜杠\作为续行符
+let quotation = """
+1231313\
+afdadfs
+"""
+print(quotation)
+
+// 使用for in遍历字符串
+for character in "Dog!" {
+    print(character)
+}
+```
+
+字符串插值是一种构建新字符串的方式，可以在其中包含常量、变量、字面量和表达式。字符串字面量和多行字符串字面量都可以使用字符串插值。你插入的字符串字面量的每一项都在以反斜线为前缀的圆括号中：
+```swift
+// 字符串插值
+let multiplier = 3
+let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
+print(message)
+// 使用count属性来获取一个字符串的长度
+print(message.count)
+```
+
+字符串索引：每一个`String`值都有一个关联的索引类型，`String.Index`，它对应着字符串中的每一个`Character`的位置。
+因为不同的字符可能会占用不同数量的内存空间，所以要知道`Character`的确定位置，就必须从`String`开头遍历每一个`Unicode`标量直到结尾。因此，`Swift`的字符串不能用整数做索引。
+```swift
+let greeting = "Guten Tag!"
+let str1 = greeting[greeting.startIndex] // 使用startIndex属性获取一个String的第一个Character的索引
+print(str1) // G
+
+let str2 = greeting[greeting.index(before: greeting.endIndex)] // index(before:) 得到前面的一个索引
+print(str2) // !
+
+let str3 = greeting[greeting.index(after: greeting.startIndex)] // index(after:) 得到后面的一个索引
+print(str3) // u
+
+let index = greeting.index(greeting.startIndex, offsetBy: 7) // index(_:offsetBy:) 获取对应偏移量的索引
+let str4 = greeting[index]
+print(str4) // a
+
+
+// 使用indices属性会创建一个包含全部索引的范围，用来在一个字符串中访问单个字符
+let greeting = "Guten Tag!"
+for index in greeting.indices {
+   print("\(greeting[index]) ", terminator: "") // G u t e n   T a g ! 
+}
+```
+
+字符串插入和删除
+```swift
+// 字符串插入
+var welcome = "hello"
+welcome.insert("!", at: welcome.endIndex) // insert(_:at:)方法可以在一个字符串的指定索引插入一个字符
+print(welcome) // hello!
+
+// 使用insert(contentsOf:at:)方法可以在一个字符串的指定索引插入一段字符串
+welcome.insert(contentsOf:" there", at: welcome.index(before: welcome.endIndex))
+print(welcome) // hello there!
+
+// remove(at:)方法可以在一个字符串的指定索引删除一个字符
+welcome.remove(at: welcome.index(before: welcome.endIndex))
+print(welcome) // hello there
+
+let range = welcome.index(welcome.endIndex, offsetBy: -6)..<welcome.endIndex
+welcome.removeSubrange(range) // removeSubrange(_:)方法可以在一个字符串的指定索引删除一个子字符串
+print(welcome) // hello
+```
