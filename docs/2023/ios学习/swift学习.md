@@ -627,3 +627,5 @@ let range = welcome.index(welcome.endIndex, offsetBy: -6)..<welcome.endIndex
 welcome.removeSubrange(range) // removeSubrange(_:)方法可以在一个字符串的指定索引删除一个子字符串
 print(welcome) // hello
 ```
+
+`UIKit`中如何查看`storyboard`的入口：项目的`info`中查看`Main storyboard file base name`
