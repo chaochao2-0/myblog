@@ -5,6 +5,10 @@
                 "text": "2023",
                 "items": [
                     {
+                        "text": "swiftUI学习",
+                        "link": "/2023/ios学习/swiftUI学习"
+                    },
+                    {
                         "text": "swift学习",
                         "link": "/2023/ios学习/swift学习"
                     },
