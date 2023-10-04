@@ -8,6 +8,9 @@ ctrl + i // 将所有代码进行缩进，类似代码格式化
 command + n // 新建文件
 command + alt + 左箭头 // 代码折叠
 command + alt + 右箭头 // 代码展开
+command + [ // 选中内容左移一个tab
+command + ] // 选中内容右移一个tab
+command + D // 复制当前行, 相当于vscode中的 shift + alt + 下箭头
 ```
 
 ## 简单布局
@@ -630,3 +633,260 @@ struct TabBar: View {
 // 只需要声明变量前使用 @AppStorage()来修饰就可以将数据保存到 AppStorage 中，读取时也是相同的操作即可
 @AppStorage("selectedTab") var selectedTab: Tab = .home
 ```
+
+## 项目结构
+一般可以将项目中的文件分别放入：
+ - Navigation: 导航栏
+ - View: 视图
+ - Components: 组件
+ - styles: 自定义扩展样式、自定义修饰符等
+ - Model: 数据模型
+
+## 数据绑定
+ 类似于vue中组件传值的父传子
+
+```swift
+// 在HomeView中声明变量
+@State var hasScrolled = false
+// HomeView使用NavigationBar时传递，传递时值前要加 $ 符号
+NavigationBar(title: "Featured", hasScrolled: $hasScrolled)
+
+
+// NavigationBar中指定数据接收
+@Binding var hasScrolled: Bool
+
+// 调整NavigationBar中preview的传值
+#Preview {
+    NavigationBar(title: "Featured", hasScrolled: .constant(false))
+}
+
+// 随后即可在NavigationBar中使用绑定的hasScrolled数据
+```
+
+## 横向TabView, 走马灯效果
+```swift
+TabView {
+    ForEach(courses) { item in
+        featuredItem(course: item)
+    }
+}
+.tabViewStyle(.page(indexDisplayMode: .never))
+.frame(height: 430)
+// 设置背景图片并设置图片偏移
+.background(Image("avator").resizable().frame(width: 400, height: 400).offset(x: 20, y: 20))
+```
+
+## Matched Geometry Effect
+```swift
+struct MachedView: View {
+    @Namespace var namespace
+    @State var show = false
+
+    var body: some View {
+        ZStack {
+            if !show {
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("SwiftUI")
+                        .font(.largeTitle.weight(.bold))
+                        .matchedGeometryEffect(id: "title", in: namespace)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text("wakk")
+                        .font(.footnote.weight(.semibold))
+                        .matchedGeometryEffect(id: "subtitle", in: namespace)
+                    Text("Build an ios app for 15 with custom layouts, animations and ...")
+                        .font(.footnote)
+                        .matchedGeometryEffect(id: "text", in: namespace)
+                }
+                .padding(20)
+                .foregroundStyle(.white)
+                .background(
+                    Color.red.matchedGeometryEffect(id: "background", in: namespace)
+                )
+                .padding(20)
+            } else {
+                VStack(alignment: .leading, spacing: 12) {
+                    Spacer()
+                    Text("Build an ios app for 15 with custom layouts, animations and ...")
+                        .font(.footnote)
+                        .matchedGeometryEffect(id: "text", in: namespace)
+                    Text("wakk")
+                        .font(.footnote.weight(.semibold))
+                        .matchedGeometryEffect(id: "subtitle", in: namespace)
+                    Text("SwiftUI")
+                        .font(.largeTitle.weight(.bold))
+                        .matchedGeometryEffect(id: "title", in: namespace)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(20)
+                .foregroundStyle(.black)
+                .background(
+                    Color.blue.matchedGeometryEffect(id: "background", in: namespace)
+                )
+            }
+        }
+        .onTapGesture {
+            withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                show.toggle()
+            }
+        }
+    }
+}
+```
+
+## Combine 环境变量的使用
+相比数据绑定和AppStorage缓存，环境变量的使用比数据绑定更方便，它的数据是不会缓存的，
+```swift
+import Combine
+
+class Model: ObservableObject {
+    @Published var showDetail: Bool = false
+    @Published var golabString: String = "这是一个全局数据"
+}
+
+// APP中
+@main
+struct swiftUI_demoApp: App {
+    let persistenceController = PersistenceController.shared
+    @StateObject var model = Model() // 实例化model
+
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(model) // 引入环境变量
+        }
+    }
+}
+
+
+// HomeView中使用
+@EnvironmentObject var model: Model
+
+Text("\(model.golabString)")
+model.golabString = "修改一下"
+```
+
+## 安装和使用 CocoaPods
+```ts
+sudo gem install cocoapods
+// 使用homebrew安装：
+brew install cocoapods
+
+// 检查安装版本
+pod --version
+
+// 初始化
+pod init // 初始化以后会生成一个Podfile文件，将需要安装的依赖装到Podfile中执行install命令即可安装好依赖
+
+// 安装依赖
+pod install
+```
+
+```ts
+// 依赖安装不上
+gem sources // 会打印出当前使用的gem源, 默认是：https://rubygems.org/
+// 新增源
+https://gems.ruby-china.com/ added to sources
+// 删掉之前的源
+gem sources -r https://rubygems.org/
+```
+
+## lazy grid
+一种自适应的布局方式
+```swift
+ScrollView {
+    LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
+        
+        ForEach(0 ..< 5) { item in
+            Color.red
+                // .frame(maxWidth: .infinity)
+                .frame(height: 300)
+            Text("分割线")
+        }
+    }
+}
+```
+iphone se没有圆角，页面显示需要做特殊处理
+```swift
+GeometryReader { proxy in
+    let hasHomeIndicator = proxy.safeAreaInsets.bottom > 20
+    
+    RoundedRectangle(cornerRadius: hasHomeIndicator ? 34 : 0, style: .continuous)
+        .background(Color.red)
+        .frame(width: 300, height: 200)
+}
+```
+
+## 搜索列表和搜索建议
+```swift
+struct SearchView: View {
+    @State var text = ""
+    
+    var body: some View {
+        NavigationView {
+            List(courses.filter { $0.title.contains(text) || text == "" } ) { item in
+                HStack(alignment: .top, spacing: 12) {
+                    Image(item.image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 44, height: 44)
+                        .background(.gray)
+                        .mask(Circle())
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(item.title).bold()
+                        Text(item.text)
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+            .searchable(
+                text: $text,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: Text("SwiftUI")
+            ) {
+                // 这里的搜索建议只能给一条，多于一条会失效
+                ForEach(suggestions) { suggestion in
+                    Text("\(suggestion.text)").searchCompletion("\(suggestion.text)")
+                }
+            }
+            .navigationTitle("Search")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(trailing: 
+                Button {
+                    print("按钮操作")
+                } label: {
+                    Text("Done").bold()
+                }
+            )
+        }
+    }
+}
+```
+
+## 文本使用markdown语法
+```swift
+Group {
+    Text("By clicking on") +
+    Text("_Create an account_").foregroundColor(.primary.opacity(0.7)) +
+    Text(", you agree to our **Terms of Service** and **[Privacy Policy](https://designcode.io)**")
+    
+    Divider()
+    
+    HStack {
+        Text("Already have an account?")
+        Button {} label: {
+            Text("**Sign in**")
+        }
+    }
+}
+.font(.footnote)
+.foregroundColor(.secondary)
+.accentColor(.secondary)
+```
+
+
+
+swiftUI如何连接websocket？？？   用一个包，等学的差不多了可以尝试尝试
+如何使用 cocoapods 来进行统一的包管理？？？    已学习，待尝试
+去github上拉两个swiftUI的项目本地跑起来    暂时没找到好的项目，可以等对swift了解的更多了再试试
