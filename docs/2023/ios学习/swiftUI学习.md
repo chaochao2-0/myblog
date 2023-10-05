@@ -885,6 +885,49 @@ Group {
 .accentColor(.secondary)
 ```
 
+## AsyncImage异步加载图片
+```swift
+AsyncImage(url: URL(string: "https://picsum.photos/200"),
+    transaction: Transaction(animation: .easeOut)) { phase in
+        switch phase {
+        case .success(let image):
+            image.resizable()
+                .transition(.scale(scale: 0.5, anchor: .center))
+        case .empty:
+            ProgressView()
+        case .failure(_):
+            Color.gray
+        @unknown default:
+            EmptyView()
+        }
+}
+.frame(width: 200, height: 200)
+.cornerRadius(20)
+```
+
+## 接口请求
+```swift
+func fetchAddress() async {
+    do {
+        let url = URL(string: "https://random-data-api.com/api/address/random_address")!
+        let (data, _) = try await URLSession.shared.data(from: url)
+        print(String(decoding: data, as: UTF8.self))
+        address = try JSONDecoder().decode(Address.self, from: data)
+    } catch {
+        address = Address(id: 1, country: "Error fetching")
+    }
+}
+
+// 接口调用
+Text("123\(address.country)").task { await fetchAddress() }
+```
+
+## 打开开发人员工具
+```swift
+打开开发人员工具： Xcode -> open developer tool -> Accessibility Inspector
+```
+
+
 
 
 swiftUI如何连接websocket？？？   用一个包，等学的差不多了可以尝试尝试
