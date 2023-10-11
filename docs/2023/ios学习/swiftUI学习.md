@@ -786,7 +786,7 @@ pod install
 // 依赖安装不上
 gem sources // 会打印出当前使用的gem源, 默认是：https://rubygems.org/
 // 新增源
-https://gems.ruby-china.com/ added to sources
+gem sources -a https://gems.ruby-china.com/
 // 删掉之前的源
 gem sources -r https://rubygems.org/
 ```
@@ -926,10 +926,3 @@ Text("123\(address.country)").task { await fetchAddress() }
 ```swift
 打开开发人员工具： Xcode -> open developer tool -> Accessibility Inspector
 ```
-
-
-
-
-swiftUI如何连接websocket？？？   用一个包，等学的差不多了可以尝试尝试
-如何使用 cocoapods 来进行统一的包管理？？？    已学习，待尝试
-去github上拉两个swiftUI的项目本地跑起来    暂时没找到好的项目，可以等对swift了解的更多了再试试
