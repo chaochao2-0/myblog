@@ -191,3 +191,107 @@ NavigationView {
     LoginView()
 })
 ```
+
+## 闭包
+
+[闭包学习](https://blog.csdn.net/qq_36924683/article/details/116896031)
+
+枚举或结构体的方法如果会修改self，则必须以`mutaing`声明修饰符标记。
+
+```swift
+// 在闭包中修改和使用外部的变量和值
+var count = 0
+mutating func doSomething() {
+    { (x: Int) in
+        self.count = 2 // 在闭包中修改和使用外部的变量和值
+        print("count: \(count)")
+    }(10)
+}
+```
+
+```swift
+// 将函数作为参数传递使用
+func doSomething(callback: (String) -> Void) {
+    let result = "Hello, World!"
+    callback(result)
+}
+func printResult(result: String) {
+    print(result)
+}
+
+doSomething(callback: printResult)
+```
+逃逸闭包不可修改`self`这个参数
+当`self`是结构体或枚举实例时，逃逸闭包不能捕获`self`
+如果`self`是一个类的实例，则逃逸闭包能铺货`self`
+如果只是普通闭包则能铺货所有类型的`self`
+
+在页面的`init`方法中，不能修改上面定义的`@State`数据，必须在`body`中修改
+
+```swift
+// 异步调用请求
+import SwiftUI
+
+struct LoginView: View {
+    @State private var isLoading = false
+    @State private var data = ""
+
+    var body: some View {
+        VStack {
+            Text(data)
+                .padding()
+            Button("Fetch Data") {
+                Task {
+                    isLoading = true
+                    let result = await fetchData()
+                    print("result: \(result)")
+                    data = result
+                    isLoading = false
+                }
+            }
+            .disabled(isLoading)
+            .padding()
+        }
+    }
+
+    func fetchData() async -> String {
+        let url = URL(string: "https://random-data-api.com/api/address/random_address")!
+        let (data, _) = try! await URLSession.shared.data(from: url)
+        return String(data: data, encoding: .utf8)!
+    }
+}
+```
+
+## 将字符串转为对象
+```swift
+struct Person: Codable {
+    let name: String
+    let age: Int
+}
+
+let jsonString = "{\"name\":\"Alice\",\"age\":20}"
+if let data = jsonString.data(using: .utf8) {
+    if let person = try? JSONDecoder().decode(Person.self, from: data) {
+        print("name: \(person.name), age: \(person.age)")
+    }
+}
+```
+
+## 使用async/await发请求
+```swift
+func fetchData() async -> String {
+    let url = URL(string: "https://random-data-api.com/api/address/random_address")!
+    let (data, _) = try! await URLSession.shared.data(from: url)
+    return String(data: data, encoding: .utf8)!
+}
+
+Button("Fetch Data") {
+    Task {
+        isLoading = true
+        let result = await fetchData()
+        print("result: \(result)")
+        data = result
+        isLoading = false
+    }
+}
+```
