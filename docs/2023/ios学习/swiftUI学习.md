@@ -780,6 +780,9 @@ pod init // 初始化以后会生成一个Podfile文件，将需要安装的依�
 
 // 安装依赖
 pod install
+
+// 查找包
+pod search Alamofire
 ```
 
 ```ts
