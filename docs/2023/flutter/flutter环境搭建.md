@@ -41,3 +41,12 @@ Command PhaseScriptExecution failed with a nonzero exit code
 ```
 
 
+先确认flutter和dart是否能够做AR sdk的这个事情
+如果能够做，sdk如何发包？如何维护？
+flutter如何打包成各种版本的app，如何上架？
+
+
+AR的画面是视频流还是像webgl一样，用ios的调用gpu的方法实现？
+如果AR的画面是调用gpu实现的,flutter是否可以实现？
+
+
