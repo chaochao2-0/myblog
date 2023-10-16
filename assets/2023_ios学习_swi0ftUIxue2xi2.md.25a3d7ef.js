@@ -633,7 +633,10 @@ import{_ as s,o as n,c as a,V as l}from"./chunks/framework.c5c8a48b.js";const i=
 <span class="line"><span style="color:#A6ACCD;">pod init </span><span style="color:#676E95;font-style:italic;">// 初始化以后会生成一个Podfile文件，将需要安装的依赖装到Podfile中执行install命令即可安装好依赖</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#676E95;font-style:italic;">// 安装依赖</span></span>
-<span class="line"><span style="color:#A6ACCD;">pod install</span></span></code></pre></div><div class="language-ts"><button title="Copy Code" class="copy"></button><span class="lang">ts</span><pre class="shiki material-theme-palenight"><code><span class="line"><span style="color:#676E95;font-style:italic;">// 依赖安装不上</span></span>
+<span class="line"><span style="color:#A6ACCD;">pod install</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">// 查找包</span></span>
+<span class="line"><span style="color:#A6ACCD;">pod search Alamofire</span></span></code></pre></div><div class="language-ts"><button title="Copy Code" class="copy"></button><span class="lang">ts</span><pre class="shiki material-theme-palenight"><code><span class="line"><span style="color:#676E95;font-style:italic;">// 依赖安装不上</span></span>
 <span class="line"><span style="color:#A6ACCD;">gem sources </span><span style="color:#676E95;font-style:italic;">// 会打印出当前使用的gem源, 默认是：https://rubygems.org/</span></span>
 <span class="line"><span style="color:#676E95;font-style:italic;">// 新增源</span></span>
 <span class="line"><span style="color:#A6ACCD;">gem sources </span><span style="color:#89DDFF;">-</span><span style="color:#A6ACCD;">a </span><span style="color:#FFCB6B;">https</span><span style="color:#89DDFF;">:</span><span style="color:#676E95;font-style:italic;">//gems.ruby-china.com/</span></span>
