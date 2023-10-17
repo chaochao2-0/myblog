@@ -230,4 +230,42 @@ void main() async {
 }
 ```
 
+# AR sdk学习了解
+## NVIDIA CloudXR SDK
+NVIDIA CloudXR SDK由服务器驱动程序、客户端SDK和示例客户端应用程序组成。
+一端是越来越轻便的终端设备，一端是算力无穷的云，这就是CloudXR的精髓所在。
 
+服务器驱动程序通过与`SteamVR`集成，对渲染的帧和系统音频进行编码，并将帧和声音发送给客户端进行解码和显示，从而将`OpenVR`应用程序中的音频和视频内容提供给客户端。服务器驱动程序还通过使用`SteamVR`接收来自客户端设备的运动和控制数据，`SteamVR`作为预构建包提供，并带有自己的安装程序。
+
+cloudXR平台基于腾讯云的部署和应用：https://www.zhihu.com/zvideo/1365679354203189248
+
+
+### ARKit
+ARKit: ARKit提供的功能总体可以分为三个部分：运动跟踪、场景理解、渲染。
+运动跟踪、场景理解上我们无需关注细节，在API层面`ARKit`中的`ARSession`给我们提供了打开摄像头去检测、跟踪当前环境(空间、平面、人脸、图片、物体)的能力。严格来讲`ARKit`并没有渲染的能力，AR的渲染需要依赖其他第三方渲染框架，如`3D SceneKit`、`2D SpriteKit`、`Metal`等。这得益于`ARKit`提供连续的摄像头图像流，可以方便的对接其他渲染。
+ARKit官方文档:https://developer.apple.com/cn/documentation/arkit/
+https://github.com/Wejua/Demos/tree/main/Demos/SubDemos/ARKitDemo
+
+
+ARCore文档：https://developers.google.com/ar/develop?hl=zh-cn
+
+### Metal
+官网的开发文档：https://developer.apple.com/cn/metal/
+用Metal绘制一个三角形:
+https://juejin.cn/post/7215891370890952741?searchId=20231016171400C70564938D162C20BC4F
+
+
+flutter中如何使用ARKit和ARCore来实现一个AR APP的开发
+
+CloudXR部署：
+- 安装`CloudXR Server`，`CloudXR-Setup.exe`，此软件可在`NVIDIA CloudXR`网站申请获得
+- 构建`CloudXR PICO`客户端，生成`apk`过程。如果您已获得编译好的`apk`或`PICO`设备已安装过了可略过
+- 从`github`下载并用`Android Studio`打开`CloudXR_Client_Demo Android`工程
+- 在`Android Studio`中`Build Android`工程，生成`apk`安装包并安装到`PICO`
+- 创建`CloudXRLanchOptions.txt`文件,文件内容为: -s <您的电脑的IP地址>
+- 将`CloudXRLanchOptions.txt`文件拷贝到`PICO`硬盘根目录中
+- 先在电脑上运行`SteamVR`然后在`PICO`上运行刚安装的`CloudXR`客户端软件：`nativexr_cloudxr_client_demo`
+- `PICO`自动进入`SteamVR`界面，无线串流成功
+- 打开`UE5`，创建一个`Collab Viewer`模板工程，构建一个`UE5 VR`应用程序并通过`CloudXR`无线串流到`PICO`
+- 工程打开后启用`SteamVR`和`OpenXR Plugins`，然后按要求重启本地`UE5`项目
+- 项目重启后可以看到`VR Preview`功能已开启，确认`PICO`还在刚才`SteamVR`的界面，已连接未待机的状态，点击`VR Preview`运行
