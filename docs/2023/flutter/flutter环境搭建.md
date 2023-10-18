@@ -40,6 +40,26 @@ open -a Xcode ios/Runner.xcworkspace
 Command PhaseScriptExecution failed with a nonzero exit code
 ```
 
+## mac mini 配置环境变量
+```ts
+// 打开环境变量配置文件
+open ~/.bash_profile
+
+// 添加flutter的安装路径到环境变量 Users/chaochao/Documents/flutter/flutter/bin是flutter安装路径
+export PATH=/Users/chaochao/Documents/flutter/flutter/bin:$PATH
+export PATH=/Users/chaochao/Documents/flutter/flutter/bin/cache/dart-sdk/bin:$PATH
+
+export PUB_HOSTED_URL=https://pub.flutter-io.cn
+export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+
+// 更新配置文件
+source ~/.bash_profile
+
+// 获取依赖
+flutter packages get
+// 依赖安装好以后如果是ios真机测试还需要用xcode打开项目下的ios项目，给项目分配一个开发team，不然打包不了
+```
+
 
 先确认flutter和dart是否能够做AR sdk的这个事情
 如果能够做，sdk如何发包？如何维护？
@@ -49,4 +69,27 @@ flutter如何打包成各种版本的app，如何上架？
 AR的画面是视频流还是像webgl一样，用ios的调用gpu的方法实现？
 如果AR的画面是调用gpu实现的,flutter是否可以实现？
 
+## Impeller
+`Impeller`是`Flutter`团队自研的渲染引擎，它的最终目标是在`Flutter`中取代当前的渲染引擎`Skia`。
+`Impeller`的出现是`Flutter`团队用以彻底解决`SkSL(Skia Shading Language)`引入的`Jank`问题所做的重要尝试。
 
+背景：`SkSL`引入的卡顿问题：
+`Skia`在第一次使用某个着色器时，需要动态生成对应的着色器代码并对其进行编译(着色器代码可以简单理解为一段跑在GPU上的代码)。这个过程可能会非常耗时，有时候会有几十甚至上百毫秒的一个耗时。
+
+`Impeller shader`的离线编译：
+与`Skia`不同的是，`Impeller`中的`shader`并不需要在运行时动态生成，而是提前写好，并通过离线编译的方式打到引擎之中的。
+
+`Impeller`中的`shader`是使用`GLSL 4.60`写的。而我们知道`Metal`后端需要的`shader`语言是`MSL(Metal shading language)`,那么`Impeller`是如何做到将`GLSL4.60`转换成`MSL`的呢？
+在引擎编译阶段，`ImpellerC`会借助`ShaderC`，将`GLSL`转换为`SPIR-V Assembly`。然后再借助`SPIR-V Cross`将`SPIR-V Assembly`反汇编为`SPIR-V IR`，并根据`SPIR-V IR`生成相应的`MSL`源码，最终将`MSL`编译链接得到`Metal Library`并将其打包到`engine`当中。
+同时，`ImpellerC`中的`Refector`根据`SPIR-V IR`中的数据，根据不同的后端，生成对应的`c++`文件，用于绑定数据等。
+
+## HappinessX
+核心组成是`Flutter Plugin + AS`插件，它提供了一套基于`GetX`极致简洁高效的`Flutter`业务开发范式，以及针对混合工程的提效工具。配套的`AS`插件帮助建立开发规范和进一步提高开发效率。
+
+Json2Dart
+GetX使用和插件：https://juejin.cn/post/6924104248275763208?searchId=202310180953376667B7DB9CBFC16C956B
+
+## Skia
+在`chrome`浏览器中，`Skia`是`Blink`渲染引擎的一部分，`Blink`渲染引擎是`Google`开发的一种基于`WebKit`的渲染引擎，用于处理`HTML`、`CSS`和`JavaScript`的渲染。`Blink`渲染引擎使用`Skia`来处理所有的2D图形操作，以提高网页的渲染性能。
+
+`chrome`显示一个页面，也是通过`CPU`和`GPU`共同处理显示出来的。而`WebGL`这样的技术让开发者可以直接自己操作`GPU`进行绘制。
