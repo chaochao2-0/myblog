@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
 
 `Row`和`Column`是水平和垂直布局的基本原始`widgets`。这些基础`widgets`允许最大程度的自定义。`Flutter`还提供专门的、更高级别的`widgets`，可能可以直接满足需求。
 
-例如，和`Row`相比你可能更喜欢`ListTitle`，这是一个易于使用的`widget`，有属性可以设置头尾图标，最多可以显示3行文本；
+例如，和`Row`相比你可能更喜欢`ListTile`，这是一个易于使用的`widget`，有属性可以设置头尾图标，最多可以显示3行文本；
 ```dart
 ListTile(title: Text('用户反馈'), trailing: Icon(Icons.feedback))
 ```
@@ -129,11 +129,11 @@ Row(
 Row(
     mainAxisSize: MainAxisSize.min,
     children: [
-      Icon(Icons.star, color: Colors.green[500]),
-      Icon(Icons.star, color: Colors.green[500]),
-      Icon(Icons.star, color: Colors.green[500]),
-      const Icon(Icons.star, color: Colors.black),
-      const Icon(Icons.star, color: Colors.black),
+        Icon(Icons.star, color: Colors.green[500]),
+        Icon(Icons.star, color: Colors.green[500]),
+        Icon(Icons.star, color: Colors.green[500]),
+        const Icon(Icons.star, color: Colors.black),
+        const Icon(Icons.star, color: Colors.black),
     ],
 );
 ```
@@ -141,12 +141,86 @@ Row(
 ## 嵌套行和列
 布局框架允许你根据需要在行和列内嵌套行和列。
 
+## 通用布局widgets
+widget分为两类：`widgets库`中的标准widgets和`Material库`中的widgets。任何app都可以使用`widget库`，但是`Material库`中的组件只能在Material app中使用。
+
+标准widgets：
+- Container: 向widget增加padding、margins、borders、background color或者其他的装饰
+- GridView: 将widget展示为一个可滚动的网格
+
+- ListView: 将widget展示为一个可滚动的列表
+- Stack: 将widget覆盖在另一个的上面
+
+Material widgets:
+- Card: 将相关信息整理到一个🈶圆角和阴影的盒子中
+- ListTile: 将最多三行的文本、可选的导语以及后面的图标组织在一行中
+
+
+## Stack
+可以使用`Stack`在基础widget上排列widget，widget可以完全或者部分覆盖基础widget。
+
+- 用于覆盖另一个widget
+- 子列表中的第一个widget是基础widget；后面的子项覆盖在基础widget的顶部
+- Stack的内容是无法滚动的
+- 你可以剪切掉超出渲染框的子项
+
+```dart
+Widget _buildStack() {
+    return Stack(
+      alignment: const Alignment(0.6, 0.6),
+      children: [
+        const CircleAvatar(
+          backgroundImage: AssetImage('assets/images/bg.png'),
+          radius: 100,
+        ),
+        Container(
+          decoration: const BoxDecoration(
+            color: Colors.black45,
+          ),
+          child: const Text(
+            'Mia B',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
+    );
+}
+```
 
 
 
 
 
+```dart
+// 为什么有的widget是当做变量定义
+final mainImage = Expanded(
+    child: Image.asset(
+        'assets/images/bg.png',
+        fit: BoxFit.contain, // cover、contain、fill
+    )
+);
 
+// 而有的widget确实当做函数实现？？？
+Widget _buildGrid() => GridView.extent(
+    maxCrossAxisExtent: 150,
+    padding: const EdgeInsets.all(4),
+    mainAxisSpacing: 4,
+    crossAxisSpacing: 4,
+    children: _buildGridTileList(30)
+);
+// 用函数这里可以传参
+List<Container> _buildGridTileList() => List.generate(
+      count, (i) => Container(child: Image.asset('assets/images/bg.png')));
+```
+
+
+
+
+## StatelessWidget 有状态Widget和无状态Widget的区别？
 
 
 

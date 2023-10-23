@@ -9,6 +9,15 @@ Container(
   height: 600,
   child: // 子widget
 )
+// decoration中还可以设置border和borderRadius
+decoration: BoxDecoration(
+  border: Border.all(width: 10, color: Colors.black38),
+  borderRadius: const BorderRadius.all(Radius.circular(8)),
+),
+// 设置背景图片
+decoration: BoxDecoration(
+    image: DecorationImage(image: AssetIm('assets/images/bg.png'))
+)
 ```
 
 ## Scaffold
@@ -125,3 +134,52 @@ Padding(
     child: // 子widget
 )
 ```
+
+## Stack
+```dart
+Stack(
+    alignment: const Alignment(0.6, 0.6),
+    children: [
+        // 子列表中的第一个widget是基础widget；后面的子项覆盖在基础widget的顶部
+    ]
+)
+```
+
+## CircleAvatar
+```dart
+CircleAvatar(
+    backgroundImage: AssetImage('assets/images/bg.png'),
+    radius: 100,
+),
+```
+
+## ListTile
+```dart
+ListTile(
+    title: const Text(
+        '1625 Main Street',
+        style: TextStyle(fontWeight: FontWeight.w500),
+    ),
+    subtitle: const Text('My City, CA 99984'),
+    leading: Icon(
+        Icons.restaurant_menu,
+        color: Colors.blue[500],
+    ),
+),
+```
+
+## 输入框
+Flutter提供了两个开箱即用的文本框组件： `TextField`和`TextFormField`。
+```dart
+final inputCom = const SizedBox(
+    width: 300,
+    child: TextField(
+        decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: 'Enter a search term'
+        )
+    )
+);
+```
+
+
