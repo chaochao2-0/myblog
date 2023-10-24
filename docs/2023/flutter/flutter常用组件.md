@@ -77,6 +77,9 @@ Image.asset(
 ```
 
 ## Icon
+Icon组件的预览地址：https://fonts.google.com/icons
+国内预览网站：https://www.fluttericon.cn/
+
 ```dart
 Icon(Icons.kitchen, color: Colors.green[500]),
 const Icon(Icons.star, color: Colors.black),

@@ -5,6 +5,27 @@
                 "text": "2023",
                 "items": [
                     {
+                        "text": "flutter",
+                        "items": [
+                            {
+                                "text": "dart学习",
+                                "link": "/2023/flutter/dart学习"
+                            },
+                            {
+                                "text": "flutter环境搭建",
+                                "link": "/2023/flutter/flutter环境搭建"
+                            },
+                            {
+                                "text": "flutter常用组件",
+                                "link": "/2023/flutter/flutter常用组件"
+                            },
+                            {
+                                "text": "flutter布局",
+                                "link": "/2023/flutter/flutter布局"
+                            }
+                        ]
+                    },
+                    {
                         "text": "swiftUI实战",
                         "link": "/2023/ios学习/swiftUI实战"
                     },

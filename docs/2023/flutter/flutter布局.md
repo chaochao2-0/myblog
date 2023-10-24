@@ -220,11 +220,27 @@ List<Container> _buildGridTileList() => List.generate(
 
 
 
-## StatelessWidget 有状态Widget和无状态Widget的区别？
+## StatelessWidget和StatefulWidget的区别
+简单理解：
+- 如果我们的`Widget`是`StatelessWidget`,那么当他的内容被创建出来之后，就不能再改变了。相反，`StatefulWidget`就可以。
+- 无状态`Widget`，就是说一旦这个`Widget`创建完成，状态就不允许再变动。有状态`Widget`，就是说当前`Widget`创建完成之后，还可以对当前`Widget`做更改，可以通过`setState`函数来刷新当前`Widget`来达到有状态。
+- `StatelessWidget`是一个不需要状态更改的`Widget`，它没有要管理的内部状态。`StatefulWidget`是可变状态的`Widget`。
 
 
+声明周期理解：
+在Flutter中，`StatelessWidget`是一种表示不可变部件的基类，它的状态在创建后不能改变，除非由父部件重新创建。因此，它没有像`StatefulWidget`那样的生命周期方法。`StatelessWidget`的构建是纯粹的，它接受一组参数并返回一个在给定参数下可视化的部件。
 
+`StatelessWidget`的生命周期：
+- `构建(Build)`：这是`StatelessWidget`的主要生命周期。每当需要重新构建部件时(通常是因为父部件的状态变化)，Flutter会调用`build`方法来生成新的部件树。
 
+在Flutter中，`StatefulWidget`是一种可变的部件，它有一些特定的生命周期方法，用于管理部件的状态和响应不同阶段的变化。
+`StatefulWidget`的生命周期：
+- `createState`: 这是`StatefulWidget`的构造方法，它会创建一个与部件关联的`State`对象。此方法只会调用一次。
+- `initState`: 在`State`对象被创建后，会立即调用`initState`方法。这是进行一次性初始化操作的好地方，比如订阅事件、初始化变量等。
+- `build`: 这是必须实现的方法，用于构建部件的UI。在部件第一次创建、需要重建或者父部件更新时都会调用这个方法。
+- `didChangeDependencies`: 在`build`方法之后立即调用。用于处理依赖关系的变化，比如获取来自`InheritedWidget`的数据，并进行相应的操作。
+- `didUpdateWidget`: 当父部件重建时，会调用`didUpdateWidget`方法。在这里可以比较新旧部件的属性，执行一些相应的操作。
+- `dispose`: 在`State`对象即将被销毁时调用。用于释放资源、取消订阅等清理操作。
 
 
 

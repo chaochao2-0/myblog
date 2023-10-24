@@ -2,8 +2,12 @@
 `dart`语句后面必须带`;`
 可以在`flutter`项目中的`test`文件夹中编辑代码做测试。
 
+## 定义变量的关键字
+普通变量：`var`、常量：`const`、`final`
+`final`关键字声明的常量只能赋值一次且声明时可以不用赋值。`final`不仅有`const`的编译时常量的特性，最重要的它是运行时常量，并且`final`是惰性初始化，即：在运行时第一次使用前才初始化。
+
 ## 基础数据类型
-int double String bool
+`int` `double` `String` `bool`
 
 ## $变量名 在字符串中插入变量值
 ```dart
@@ -153,6 +157,14 @@ for(int i = 0; i < numList.length; i++) {
 for (int value in numList) {
     print("元素值:$value");
 }
+```
+
+```dart
+// dart:core库中List.generate的用法：
+final data = List.generate(10, (index) => index ); // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+final data = List.generate(10, (index) => 'index:$index' );
+// [index:0, index:1, index:2, index:3, index:4, index:5, index:6, index:7, index:8, index:9]
 ```
 
 ## 集合Set
