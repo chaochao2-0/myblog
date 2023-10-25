@@ -25,9 +25,27 @@ a.subString(1);
 ## 数据类型判断
 通过`is`关键词来判断一个变量类型
 ```dart
-var aa = 123;
-print(aa is int);
-print(jsonString is String);
+// 数字转字符串
+int a = 123;
+double b = 123.23;
+String _a = a.toString();
+assert(_a == '123');
+String _b = b.toStringAsFixed(1);
+assert(_a == '123.2');
+
+// 字符串转数字
+String a = '123';
+String b = '123.23';
+int _a = int.parse(a);
+assert(_a == 123);
+double _b = double.parse(b);
+assert(_b == 123.23);
+```
+
+## 数据类型转换
+```dart
+int a = 123;
+String _a = a.toString();
 ```
 
 ## $变量名 在字符串中插入变量值
