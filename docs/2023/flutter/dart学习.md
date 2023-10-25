@@ -6,8 +6,29 @@
 普通变量：`var`、常量：`const`、`final`
 `final`关键字声明的常量只能赋值一次且声明时可以不用赋值。`final`不仅有`const`的编译时常量的特性，最重要的它是运行时常量，并且`final`是惰性初始化，即：在运行时第一次使用前才初始化。
 
+`Object`和`dynamic`的区别：
+`Object`是所有类的基类，相当于一个可以兼容所有类型的超级类型。`dynamic`就是一个动态类，类似`TypeScript`的`any`。
+```dart
+Object a = 'zhangsan';
+a.subString(1); // 会报错：The method 'subString' isn't defined for the type 'Object'.
+
+// 换成dynamic就表示这是动态类型，可以绕过编译检查
+dynamic a = 'zhangsan';
+a.subString(1);
+```
+
 ## 基础数据类型
-`int` `double` `String` `bool`
+`int` `double` `String` `bool` `List` `Set` `Map` `Symbol` `Null`
+
+`dart`中的`String`类型和`js`中差不多，可以通过下标访问具体字符串。
+
+## 数据类型判断
+通过`is`关键词来判断一个变量类型
+```dart
+var aa = 123;
+print(aa is int);
+print(jsonString is String);
+```
 
 ## $变量名 在字符串中插入变量值
 ```dart
