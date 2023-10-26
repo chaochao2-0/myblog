@@ -185,4 +185,14 @@ final inputCom = const SizedBox(
 );
 ```
 
+## 按钮
+```dart
+ElevatedButton(
+  onPressed: () async{
+    print('点击事件响应');
+  },
+  child: const Text("获取缓存")
+),
+```
+
 
