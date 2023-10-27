@@ -20,26 +20,51 @@
                                 "link": "/2023/flutter/flutter环境搭建"
                             },
                             {
+                                "text": "flutter布局",
+                                "link": "/2023/flutter/flutter布局"
+                            },
+                            {
                                 "text": "flutter常用组件",
                                 "link": "/2023/flutter/flutter常用组件"
                             },
                             {
-                                "text": "flutter布局",
-                                "link": "/2023/flutter/flutter布局"
+                                "text": "flutter常用场景",
+                                "link": "/2023/flutter/一些常用场景"
+                            },
+                            {
+                                "text": "状态管理",
+                                "link": "/2023/flutter/状态管理"
+                            },
+                            {
+                                "text": "数据持久化",
+                                "link": "/2023/flutter/数据持久化"
+                            },
+                            {
+                                "text": "路由",
+                                "link": "/2023/flutter/路由"
+                            },
+                            {
+                                "text": "接口请求",
+                                "link": "/2023/flutter/接口请求"
                             }
                         ]
                     },
                     {
-                        "text": "swiftUI实战",
-                        "link": "/2023/ios学习/swiftUI实战"
-                    },
-                    {
-                        "text": "swiftUI学习",
-                        "link": "/2023/ios学习/swiftUI学习"
-                    },
-                    {
-                        "text": "swift学习",
-                        "link": "/2023/ios学习/swift学习"
+                        "text": "ios学习",
+                        "items": [
+                            {
+                                "text": "swift学习",
+                                "link": "/2023/ios学习/swift学习"
+                            },
+                            {
+                                "text": "swiftUI学习",
+                                "link": "/2023/ios学习/swiftUI学习"
+                            },
+                            {
+                                "text": "swiftUI实战",
+                                "link": "/2023/ios学习/swiftUI实战"
+                            }                            
+                        ]
                     },
                     {
                         "text": "pinia",
