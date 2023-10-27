@@ -195,4 +195,110 @@ ElevatedButton(
 ),
 ```
 
+## tooltip
+```dart
+Tooltip(
+    message: "我叫路飞，是要成为海贼王的男人。我叫路飞，是要成为海贼王的男人。我叫路飞，是要成为海贼王的男人。我叫路飞，是要成为海贼王的男人。我叫路飞，是要成为海贼王的男人。",
+    height: 30,
+    padding: EdgeInsets.all(20),
+    margin: EdgeInsets.all(20),
+    verticalOffset: 10, // 距离 child 中心点的竖直方向偏移量
+    preferBelow: true, // 设置为 false 时，会展示在 child 上方
+    excludeFromSemantics: false, // 是否使用语义标签
+    waitDuration: Duration(seconds: 0), // 指针悬停多久后展示 Tooltip ，默认为 0
+    showDuration: Duration(seconds: 1), // 展示时长，之后消失
+    // 子控件
+    child: Text(
+      "路飞",
+      textAlign: TextAlign.center,
+    ),
+);
+```
 
+## PopupMenuButton弹出菜单
+```dart
+import 'package:flutter/material.dart';
+
+enum SampleItem { itemOne, itemTwo, itemThree }
+
+void main() => runApp(const PopupMenuApp());
+
+class PopupMenuApp extends StatelessWidget {
+  const PopupMenuApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+          useMaterial3: true, colorSchemeSeed: const Color(0xff6750a4)),
+      home: const PopupMenuExample(),
+    );
+  }
+}
+
+class PopupMenuExample extends StatefulWidget {
+  const PopupMenuExample({super.key});
+
+  @override
+  State<PopupMenuExample> createState() => _PopupMenuExampleState();
+}
+
+class _PopupMenuExampleState extends State<PopupMenuExample> {
+  SampleItem? selectedMenu;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('PopupMenuButton')),
+      body: Center(
+        child: PopupMenuButton<SampleItem>(
+          initialValue: selectedMenu,
+          // Callback that sets the selected popup menu item.
+          onSelected: (SampleItem item) {
+            setState(() {
+              selectedMenu = item;
+            });
+          },
+          itemBuilder: (BuildContext context) => <PopupMenuEntry<SampleItem>>[
+            const PopupMenuItem<SampleItem>(
+              value: SampleItem.itemOne,
+              child: Text('Item 1'),
+            ),
+            const PopupMenuItem<SampleItem>(
+              value: SampleItem.itemTwo,
+              child: Text('Item 2'),
+            ),
+            const PopupMenuItem<SampleItem>(
+              value: SampleItem.itemThree,
+              child: Text('Item 3'),
+            ),
+          ],
+          child: const Text('Hello World'),
+        ),
+      ),
+    );
+  }
+}
+```
+
+## 进度条
+Flutter内置进度条有三种类型，分别是：水平的`LinearProgressIndicator`、圆形的`CircularProgressIndicator`、刷新时`RefreshProgressIndicator`
+```dart
+LinearProgressIndicator(
+  backgroundColor: Colors.yellow, // 背景颜色
+  valueColor: AlwaysStoppedAnimation(Colors.pink), // 进度动画颜色
+  value: 0.7, // 如果进度是确定的，那么可以设置进度百分比，0-1
+),
+```
+进度条本身不能设置高度，但可以通过父容器设置高度来间接设置
+```dart
+SizedBox(
+  height: 100,
+  width: 200,
+  child: LinearProgressIndicator(
+    backgroundColor: Colors.red, // 背景颜色
+    valueColor: AlwaysStoppedAnimation(Colors.black), // 进度动画颜色
+    value: 0.9, // 如果进度是确定的，那么可以设置进度百分比，0-1
+  )
+)
+```
