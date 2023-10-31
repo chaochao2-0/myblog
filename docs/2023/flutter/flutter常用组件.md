@@ -3,7 +3,7 @@
 ## Container
 ```dart
 Container(
-  decoration: const BoxDecoration(color: Colors.purple), // 设置背景颜色
+  decoration: const BoxDecoration(color: Colors.purple), // 设置背景颜色  Color.fromRGBO(255, 192, 203, 1)
   padding: const EdgeInsets.all(20),
   margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
   height: 600,
@@ -41,6 +41,7 @@ Text(
       fontFamily: 'Roboto',
       letterSpacing: 2,// 字间距
       fontSize: 20,
+      decoration: TextDecoration.none
     )
 )
 ```
@@ -173,6 +174,8 @@ ListTile(
 
 ## 输入框
 Flutter提供了两个开箱即用的文本框组件： `TextField`和`TextFormField`。
+`TextField Widget`需要被包裹在`Scaffold Widget`中
+否则会报错：The specific widget that could not find a Material ancestor was: TextField
 ```dart
 final inputCom = const SizedBox(
     width: 300,
