@@ -11,6 +11,7 @@ command + alt + 右箭头 // 代码展开
 command + [ // 选中内容左移一个tab
 command + ] // 选中内容右移一个tab
 command + D // 复制当前行, 相当于vscode中的 shift + alt + 下箭头
+command + shift + . // 显示隐藏的文件夹
 ```
 
 ## 简单布局

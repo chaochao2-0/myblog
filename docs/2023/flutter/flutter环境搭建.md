@@ -75,8 +75,9 @@ fvm install 3.10.0
 // 查看安装列表
 fvm list
 // 切换flutter版本
-fvm use 3.10.0 --local
+fvm use 3.10.0
 ```
+我安装的fvm并没有像博客中的那样有`.fvm`文件夹，安装过程等待了很久，效果却一点都不好，暂时放弃使用`fvm`工具
 https://juejin.cn/post/6939712499465846798?searchId=20231101165324A5F32542D249556280AC
 
 
