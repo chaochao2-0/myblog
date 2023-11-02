@@ -10,3 +10,13 @@
 - 输出合并阶段（Output Merging Stage）：在这个阶段，所有的片元会被送入帧缓冲区，最终生成显示在屏幕上的图像。 需要注意的是，以上只是一个通用的渲染管线流程，具体的实现可能会有所不同。此外，不同的WebGL API版本可能也会有一些差异。
 
 ## gltf格式的数据格式是怎样的？如何优化？
+
+
+## Node的子进程有哪些方法？
+Node 提供了 child_process 模块来创建子进程，方法有：
+
+exec - child_process.exec 使用子进程执行命令，缓存子进程的输出，并将子进程的输出以回调函数参数的形式一次性返回。exec方法会从子进程中返回一个完整的buffer。默认情况下，这个buffer的大小应该是200k。如果子进程返回的数据大小超过了200k，程序将会崩溃，同时显示错误信息“Error：maxBuffer exceeded”。你可以通过在exec的可选项中设置一个更大的buffer体积来解决这个问题，但是你不应该这样做，因为exec本来就不是用来返回很多数据的方法。
+
+spawn - child_process.spawn 使用指定的命令行参数创建新进程。spawn 会返回一个带有stdout和stderr流的对象。你可以通过stdout流来读取子进程返回给Node.js的数据。stdout拥有’data’,’end’以及一般流所具有的事件。当你想要子进程返回大量数据给Node时，比如说图像处理，读取二进制数据等等，你最好使用spawn方法。
+
+fork - child_process.fork 是 spawn()的特殊形式，用于在子进程中运行的模块，如 fork(‘./son.js’) 相当于 spawn(‘node’, [‘./son.js’]) 。与spawn方法不同的是，fork会在父进程与子进程之间，建立一个通信管道，用于进程之间的通信。
