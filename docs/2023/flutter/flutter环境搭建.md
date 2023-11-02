@@ -17,6 +17,7 @@ https://juejin.cn/post/7243357900940378170?searchId=20230805001356ABCFDE5794FDC3
  ```
 ## flutter的包管理工具pub
 Dart提供了包管理工具`Pub`，用来管理代码和资源。与`Android`中的`JCenter/Maven`、ios中的`CocoaPods`、前端中的`npm`库类似。对应的依赖管理文件是`pubspace.yaml`
+https://pub-web.flutter-io.cn/
 
 ## mac mini环境配置
 1. 下载Android Studio
@@ -59,6 +60,29 @@ source ~/.bash_profile
 flutter packages get
 // 依赖安装好以后如果是ios真机测试还需要用xcode打开项目下的ios项目，给项目分配一个开发team，不然打包不了
 ```
+
+## fvm切换flutter版本
+```dart
+// 添加homebrew tap
+brew tap leoafarias/fvm
+
+// 安装 fvm
+brew install fvm
+// 查看fvm的版本
+fvm --version
+// 安装flutter版本
+fvm install 3.10.0
+// 查看安装列表
+fvm list
+// 切换flutter版本
+fvm use 3.10.0 --local
+```
+https://juejin.cn/post/6939712499465846798?searchId=20231101165324A5F32542D249556280AC
+
+
+
+
+
 
 
 先确认flutter和dart是否能够做AR sdk的这个事情
