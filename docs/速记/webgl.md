@@ -20,3 +20,27 @@ exec - child_process.exec 使用子进程执行命令，缓存子进程的输出
 spawn - child_process.spawn 使用指定的命令行参数创建新进程。spawn 会返回一个带有stdout和stderr流的对象。你可以通过stdout流来读取子进程返回给Node.js的数据。stdout拥有’data’,’end’以及一般流所具有的事件。当你想要子进程返回大量数据给Node时，比如说图像处理，读取二进制数据等等，你最好使用spawn方法。
 
 fork - child_process.fork 是 spawn()的特殊形式，用于在子进程中运行的模块，如 fork(‘./son.js’) 相当于 spawn(‘node’, [‘./son.js’]) 。与spawn方法不同的是，fork会在父进程与子进程之间，建立一个通信管道，用于进程之间的通信。
+
+
+## 字节外包面试
+如何快速通过debugger的方式去找到某种效果的实现方式？
+带着问题去调试，在调试的过程看源码
+
+- 如何实现一个函数继承另一个函数
+- 如何用promise基于一个方法封装callback函数,封装成.then的方式访问数据
+- 如何实现数组去重，es5和es6分别怎么实现，es5实现的算法时间复杂度和空间复杂度是多少
+```js
+// 我的答案:
+const aa = (arr) => {
+    let newArr = []
+    arr.forEach(item => {
+        const index = newArr.findIndex(data => data === item)
+        if (index === -1) {
+            newArr.push(item)
+        }
+    })
+    return newArr
+}
+```
+- 鼠标点击焦点，我这边点击，你那边会同步显示谁点击在什么位置，这个效果是如何实现的？
+- vue模板编译成AST后，最后又变成了什么形式，最终在浏览器中渲染成了html
